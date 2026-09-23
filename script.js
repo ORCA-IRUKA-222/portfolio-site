@@ -124,3 +124,18 @@
     if (window.innerWidth > 880 && !menu.hidden) close();
   });
 })();
+
+/* ---------- folds: open everything for print ---------- */
+(function () {
+  var opened = [];
+  window.addEventListener('beforeprint', function () {
+    opened = [];
+    document.querySelectorAll('details.more:not([open])').forEach(function (d) {
+      d.open = true; opened.push(d);
+    });
+  });
+  window.addEventListener('afterprint', function () {
+    opened.forEach(function (d) { d.open = false; });
+    opened = [];
+  });
+})();

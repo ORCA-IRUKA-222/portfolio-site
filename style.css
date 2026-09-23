@@ -303,6 +303,36 @@ strong{font-weight:700}
   align-items:center;justify-content:space-between}
 .ft-bar .nm{font-family:var(--jp);font-weight:700;font-size:clamp(15px,2.2vw,20px);letter-spacing:.3em}
 
+/* ---------- more: 要点の下に畳んだ詳細 ----------
+   見える層だけで要点が伝わるようにし、過程や根拠はここへ畳む。
+   印刷時は script.js が全部開く。 */
+.more{margin-top:clamp(30px,4vw,52px);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.more>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:16px;
+  padding:16px 2px;line-height:1.6;-webkit-tap-highlight-color:transparent}
+.more>summary::-webkit-details-marker{display:none}
+.more>summary:focus-visible{outline:2px solid var(--violet);outline-offset:4px}
+.more .ic{flex:none;position:relative;width:32px;height:32px;border:1px solid var(--violet);color:var(--violet);
+  background:var(--paper);transition:background .25s,color .25s}
+.dark .more .ic{background:#1e1e23}
+.more .ic::before,.more .ic::after{content:"";position:absolute;left:50%;top:50%;width:11px;height:1.5px;
+  background:currentColor;transform:translate(-50%,-50%)}
+.more .ic::after{transform:translate(-50%,-50%) rotate(90deg);transition:transform .3s}
+.more[open] .ic::after{transform:translate(-50%,-50%) rotate(0)}
+.more>summary:hover .ic{background:var(--violet);color:#fff}
+.more .lbl{display:flex;flex-direction:column;min-width:0}
+.more .lbl b{font-size:14px;font-weight:700;letter-spacing:.06em}
+.more .lbl .c{display:none}
+.more[open] .lbl .o{display:none}
+.more[open] .lbl .c{display:inline}
+.more .sub{font-size:11.5px;color:#5a5a63;letter-spacing:.02em}
+.dark .more .sub{color:var(--mute2)}
+.more .min{margin-left:auto;flex:none;font-family:var(--en);font-size:10px;font-weight:500;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--mute)}
+.dark .more .min{color:var(--mute2)}
+.more-body{padding:clamp(18px,3vw,30px) 0 clamp(30px,4vw,50px)}
+.more .rv.armed{opacity:1;transform:none}
+@media(max-width:560px){.more .min{display:none}}
+
 /* ---------- reveal ----------
    Default is the resting, visible state. Only elements that script
    confirms are below the fold get "armed", so the page reads fully
@@ -322,6 +352,7 @@ strong{font-weight:700}
 @media print{
   .hd,.scroll-cue,.play .btn{display:none!important}
   .rv{opacity:1;transform:none}
+  .more>summary{display:none}
   .sec::before{display:none}
   .dark{background:#1e1e23!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
   .blk{padding:28px 0;break-inside:avoid}
